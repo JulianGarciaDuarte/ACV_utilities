@@ -434,10 +434,18 @@ class DatasetDiscover:
         - fetch_patients()
     """
     patients = {}
+    def_mask_config = {'full_match': True}
+    def_series_config = {'try_full_match': True}
+    
     def __init__(self, root):
         self.root = root
         
-    def fetch_patients(self, patient_id_list, modalities, mask_config, series_config):
+    def fetch_patients(self, patient_id_list, modalities, mask_config=None, series_config=None):
+        if mask_config is None:
+            mask_config = self.def_mask_config
+        if series_config is None:
+            series_config = self.def_series_config
+            
         for patient_id in patient_id_list:
             patient_path = os.path.join(self.root, patient_id)
             if not os.path.isdir(patient_path):
